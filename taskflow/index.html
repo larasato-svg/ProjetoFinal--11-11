@@ -1,0 +1,1196 @@
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>taskflow</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | Minhas Missões</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+
+
+
+    <style>
+
+/* ==============================
+   CONFIGURAÇÕES GERAIS
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #100923;
+    --sidebar: #180d35;
+    --panel: #211344;
+    --panel-light: #2d1a53;
+
+    --purple: #8538f5;
+    --purple-light: #b58aff;
+    --blue: #448cff;
+
+    --white: #ffffff;
+    --text: #e8ddff;
+    --text-muted: #a99bc5;
+
+    --border: #53317e;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--background);
+    color: var(--white);
+    min-height: 100vh;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* ==============================
+   ESTRUTURA PRINCIPAL
+============================== */
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   MENU LATERAL
+============================== */
+
+.sidebar {
+    width: 220px;
+    min-height: 100vh;
+    background: var(--sidebar);
+
+    border-right: 1px solid var(--border);
+
+    padding: 25px 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    flex-shrink: 0;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 10px;
+    margin-bottom: 40px;
+}
+
+.logo h2 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.logo-icon {
+    color: var(--purple-light);
+    font-size: 27px;
+
+    text-shadow: 0 0 15px var(--purple);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+
+    text-decoration: none;
+    color: var(--text-muted);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    border-radius: 9px;
+
+    transition: 0.3s;
+}
+
+.menu-item span {
+    font-size: 18px;
+}
+
+.menu-item:hover {
+    background: var(--panel-light);
+    color: white;
+}
+
+.menu-item.active {
+    background: linear-gradient(
+        100deg,
+        #8538f5,
+        #5524a5
+    );
+
+    color: white;
+
+    box-shadow: 0 0 15px #8538f555;
+}
+
+
+/* DECORAÇÃO LATERAL */
+
+.sidebar-decoration {
+    margin-top: auto;
+
+    padding: 20px 10px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.sidebar-decoration span {
+    font-size: 35px;
+    display: block;
+
+    margin-bottom: 10px;
+}
+
+
+/* ==============================
+   CONTEÚDO PRINCIPAL
+============================== */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 0 30px 25px;
+
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            #54238c33,
+            transparent 35%
+        ),
+        var(--background);
+}
+
+
+/* ==============================
+   BARRA SUPERIOR
+============================== */
+
+.topbar {
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    border-bottom: 1px solid #ffffff15;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+
+    background: var(--panel-light);
+
+    border: 1px solid var(--purple-light);
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 21px;
+}
+
+.user-level {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    font-size: 11px;
+}
+
+.user-level small {
+    color: var(--text-muted);
+}
+
+.xp-bar {
+    width: 100px;
+    height: 5px;
+
+    background: #49356a;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.xp-progress {
+    width: 64%;
+    height: 100%;
+
+    background: var(--purple-light);
+    border-radius: 10px;
+}
+
+.coins {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.settings-button {
+    background: transparent;
+    color: white;
+
+    border: none;
+
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* ==============================
+   CABEÇALHO DAS MISSÕES
+============================== */
+
+.missions-section {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin: 30px 0;
+}
+
+.title-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title-icon {
+    font-size: 35px;
+
+    filter: drop-shadow(0 0 10px #a66aff);
+}
+
+.title-area h1 {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.title-area p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+
+/* BOTÃO NOVA MISSÃO */
+
+.new-task-button {
+    background: linear-gradient(
+        100deg,
+        #943dff,
+        #6826d4
+    );
+
+    color: white;
+
+    border: 1px solid #bd91ff;
+    border-radius: 9px;
+
+    padding: 11px 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 15px #8538f544;
+
+    transition: 0.3s;
+}
+
+.new-task-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 0 22px #a66aff99;
+}
+
+
+/* ==============================
+   FILTROS
+============================== */
+
+.filters {
+    display: flex;
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.search-input,
+.filters select {
+    background: var(--panel);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    padding: 11px 12px;
+
+    font-size: 11px;
+
+    outline: none;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 120px;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.filters select {
+    cursor: pointer;
+    max-width: 190px;
+}
+
+.filters select option {
+    background: var(--panel);
+}
+
+
+/* ==============================
+   CONTAINER DE TAREFAS
+============================== */
+
+.task-container {
+    background: #1a1033;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    box-shadow: 0 5px 25px #00000030;
+}
+
+.task-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pending-title {
+    color: #ffc45e;
+}
+
+.progress-title {
+    color: #65aaff;
+}
+
+.completed-title {
+    color: #6be49b;
+}
+
+
+/* ==============================
+   LINHAS DAS TAREFAS
+============================== */
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task-row {
+    display: grid;
+
+    grid-template-columns:
+        20px minmax(120px, 1fr)
+        90px 75px 70px 35px;
+
+    align-items: center;
+    gap: 10px;
+
+    background: #291b48;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    padding: 10px;
+
+    transition: 0.3s;
+}
+
+.task-row:hover {
+    background: #38235f;
+    border-color: var(--border);
+}
+
+.task-row input {
+    accent-color: var(--purple);
+    cursor: pointer;
+}
+
+.task-name {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+
+/* CATEGORIAS */
+
+.category,
+.priority {
+    width: fit-content;
+
+    padding: 3px 9px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.purple {
+    color: #d1aaff;
+    background: #7134a855;
+}
+
+.orange {
+    color: #ffb47d;
+    background: #a75b2855;
+}
+
+.blue {
+    color: #8dc4ff;
+    background: #285ba855;
+}
+
+.green {
+    color: #80e6a5;
+    background: #287c4c55;
+}
+
+
+/* PRIORIDADES */
+
+.high {
+    color: #ff8585;
+    background: #a82d3d55;
+}
+
+.medium {
+    color: #ffce77;
+    background: #a77a2855;
+}
+
+.low {
+    color: #81c5ff;
+    background: #286aa855;
+}
+
+
+/* DATA E AÇÕES */
+
+.task-date {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.task-actions {
+    color: var(--text-muted);
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+
+/* TAREFAS CONCLUÍDAS */
+
+.task-row.completed .task-name {
+    color: #9184a8;
+    text-decoration: line-through;
+}
+
+
+/* ==============================
+   RODAPÉ
+============================== */
+
+.task-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 20px;
+    padding: 15px;
+
+    background: #211344;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    font-size: 11px;
+}
+
+.task-footer p {
+    color: var(--text-muted);
+}
+
+.task-footer strong {
+    color: white;
+}
+
+.task-footer > span {
+    color: #e1c5ff;
+}
+
+.progress-bar {
+    width: 180px;
+    height: 8px;
+
+    background: #49356a;
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 33%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #963eff,
+        #c18aff
+    );
+
+    border-radius: 20px;
+}
+
+
+/* ==============================
+   RESPONSIVIDADE
+============================== */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .main-content {
+        padding: 0 18px 20px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+        flex-basis: 100%;
+    }
+
+    .task-row {
+        grid-template-columns:
+            20px minmax(100px, 1fr)
+            75px 65px 35px;
+    }
+
+    .task-date {
+        display: none;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        width: 65px;
+        padding: 20px 8px;
+    }
+
+    .logo {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .logo h2,
+    .menu-item:not(.active)::after {
+        display: none;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 12px 5px;
+
+        font-size: 0;
+    }
+
+    .menu-item span {
+        font-size: 20px;
+    }
+
+    .sidebar-decoration {
+        display: none;
+    }
+
+    .main-content {
+        padding: 0 12px 20px;
+    }
+
+    .topbar {
+        height: 65px;
+    }
+
+    .user-info {
+        gap: 10px;
+    }
+
+    .coins {
+        font-size: 11px;
+    }
+
+    .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .title-area h1 {
+        font-size: 21px;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .search-input,
+    .filters select {
+        width: 100%;
+        max-width: none;
+    }
+
+    .task-container {
+        padding: 10px;
+    }
+
+    .task-row {
+        grid-template-columns: 18px minmax(0, 1fr) 35px;
+        gap: 8px;
+    }
+
+    .task-row .category,
+    .task-row .priority,
+    .task-row .task-date {
+        display: none;
+    }
+
+    .task-name {
+        font-size: 10px;
+    }
+
+    .task-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .progress-bar {
+        width: 100%;
+    }
+
+}
+
+    </style>
+</head>
+
+<body>
+
+   <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+
+
+
+
+
+    <div class="dashboard">
+
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <span class="logo-icon">✦</span>
+                <h2>TaskFlow</h2>
+            </div>
+
+            <nav class="menu">
+
+                <a href="#" class="menu-item">
+                    <span>⌂</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="menu-item active">
+                    <span>▤</span>
+                    Minhas Missões
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span>▦</span>
+                    Categorias
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span>🏆</span>
+                    Conquistas
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span>⚙</span>
+                    Configurações
+                </a>
+
+            </nav>
+
+            <div class="sidebar-decoration">
+                <span>🌌</span>
+                <span>🚀</span>
+                <p>Sua jornada começa aqui!</p>
+            </div>
+
+        </aside>
+
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+
+            <!-- BARRA SUPERIOR -->
+            <header class="topbar">
+
+                <div class="topbar-space"></div>
+
+                <div class="user-info">
+
+                    <div class="avatar">👩🏻‍🚀</div>
+
+                    <div class="user-level">
+                        <strong>Nível 5</strong>
+
+                        <div class="xp-bar">
+                            <div class="xp-progress"></div>
+                        </div>
+
+                        <small>320 / 500 XP</small>
+                    </div>
+
+                    <div class="coins">
+                        🟡 1.250
+                    </div>
+
+                    <button class="settings-button">⚙</button>
+
+                </div>
+
+            </header>
+
+
+            <!-- ÁREA DAS MISSÕES -->
+            <section class="missions-section">
+
+                <!-- CABEÇALHO -->
+                <div class="section-header">
+
+                    <div class="title-area">
+
+                        <span class="title-icon">📜</span>
+
+                        <div>
+                            <h1>Minhas Missões</h1>
+
+                            <p>
+                                Organize suas tarefas e complete
+                                suas missões!
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <button class="new-task-button">
+                        + Nova Missão
+                    </button>
+
+                </div>
+
+
+                <!-- FILTROS -->
+                <div class="filters">
+
+                    <input
+                        type="search"
+                        placeholder="⌕  Pesquisar missões..."
+                        class="search-input"
+                    >
+
+                    <select>
+                        <option>Todos os status</option>
+                        <option>Pendente</option>
+                        <option>Em andamento</option>
+                        <option>Concluída</option>
+                    </select>
+
+                    <select>
+                        <option>Todas as prioridades</option>
+                        <option>Alta</option>
+                        <option>Média</option>
+                        <option>Baixa</option>
+                    </select>
+
+                    <select>
+                        <option>Todas as categorias</option>
+                        <option>Estudos</option>
+                        <option>Trabalho</option>
+                        <option>Pessoal</option>
+                    </select>
+
+                </div>
+
+
+                <!-- LISTA DE MISSÕES -->
+                <div class="task-container">
+
+
+                    <!-- PENDENTES -->
+                    <div class="task-group">
+
+                        <div class="group-title pending-title">
+                            <span>🟡</span>
+                            Pendentes (3)
+                        </div>
+
+                        <div class="task-list">
+
+                            <div class="task-row">
+
+                                <input type="checkbox">
+
+                                <span class="task-name">
+                                    Estudar React
+                                </span>
+
+                                <span class="category purple">
+                                    Estudos
+                                </span>
+
+                                <span class="priority high">
+                                    Alta
+                                </span>
+
+                                <span class="task-date">
+                                    Hoje
+                                </span>
+
+                                <div class="task-actions">
+                                    ✎ ⋮
+                                </div>
+
+                            </div>
+
+
+                            <div class="task-row">
+
+                                <input type="checkbox">
+
+                                <span class="task-name">
+                                    Organizar o quarto
+                                </span>
+
+                                <span class="category orange">
+                                    Pessoal
+                                </span>
+
+                                <span class="priority medium">
+                                    Média
+                                </span>
+
+                                <span class="task-date">
+                                    Amanhã
+                                </span>
+
+                                <div class="task-actions">
+                                    ✎ ⋮
+                                </div>
+
+                            </div>
+
+
+                            <div class="task-row">
+
+                                <input type="checkbox">
+
+                                <span class="task-name">
+                                    Planejar projeto de faculdade
+                                </span>
+
+                                <span class="category blue">
+                                    Estudos
+                                </span>
+
+                                <span class="priority low">
+                                    Baixa
+                                </span>
+
+                                <span class="task-date">
+                                    Sexta
+                                </span>
+
+                                <div class="task-actions">
+                                    ✎ ⋮
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EM ANDAMENTO -->
+                    <div class="task-group">
+
+                        <div class="group-title progress-title">
+                            <span>🔵</span>
+                            Em andamento (1)
+                        </div>
+
+                        <div class="task-list">
+
+                            <div class="task-row">
+
+                                <input type="checkbox">
+
+                                <span class="task-name">
+                                    Desenvolver o site TaskFlow
+                                </span>
+
+                                <span class="category purple">
+                                    Projetos
+                                </span>
+
+                                <span class="priority medium">
+                                    Média
+                                </span>
+
+                                <span class="task-date">
+                                    Hoje
+                                </span>
+
+                                <div class="task-actions">
+                                    ✎ ⋮
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONCLUÍDAS -->
+                    <div class="task-group">
+
+                        <div class="group-title completed-title">
+                            <span>🟢</span>
+                            Concluídas (2)
+                        </div>
+
+                        <div class="task-list">
+
+                            <div class="task-row completed">
+
+                                <input type="checkbox" checked>
+
+                                <span class="task-name">
+                                    Ler um capítulo do livro
+                                </span>
+
+                                <span class="category green">
+                                    Lazer
+                                </span>
+
+                                <span class="priority low">
+                                    Baixa
+                                </span>
+
+                                <span class="task-date">
+                                    Ontem
+                                </span>
+
+                                <div class="task-actions">
+                                    ✎ ⋮
+                                </div>
+
+                            </div>
+
+
+                            <div class="task-row completed">
+
+                                <input type="checkbox" checked>
+
+                                <span class="task-name">
+                                    Fazer exercícios de lógica
+                                </span>
+
+                                <span class="category purple">
+                                    Estudos
+                                </span>
+
+                                <span class="priority low">
+                                    Baixa
+                                </span>
+
+                                <span class="task-date">
+                                    Ontem
+                                </span>
+
+                                <div class="task-actions">
+                                    ✎ ⋮
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RODAPÉ DO PAINEL -->
+                <footer class="task-footer">
+
+                    <p>
+                        Total: <strong>6 missões</strong>
+                        |
+                        <strong>2 concluídas (33%)</strong>
+                    </p>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                    <span>🏆 Você está indo bem!</span>
+
+                </footer>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
